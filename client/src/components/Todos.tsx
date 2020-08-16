@@ -158,8 +158,8 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
 
   renderTodosList() {
     return (
-      <Grid padded>
-        {this.state.todos.map((todo, pos) => {
+      <Grid padded>{
+        this.state.todos.map((todo, pos) => {
           return (
             <Grid.Row key={todo.todoId}>
               <Grid.Column width={1} verticalAlign="middle">

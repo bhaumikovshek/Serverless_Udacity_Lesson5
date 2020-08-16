@@ -1,6 +1,6 @@
-import 'source-map-support/register';
+import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda';
-import { generateUploadUrl } from '../../helpers/Todos';
+import { generateUploadUrl } from '../../businessLogic/Todos';
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const signedUrl = await generateUploadUrl(event);

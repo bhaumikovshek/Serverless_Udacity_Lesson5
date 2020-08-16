@@ -1,9 +1,14 @@
 import 'source-map-support/register';
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda';
-import { deleteTodo } from '../../helpers/Todos';
+import { deleteTodo } from '../../businessLogic/Todos';
+import { createLogger } from '../../utils/logger'
+
+const logger = createLogger('auth')
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   // delete todo and if it fails, return error
+  logger.info('Deleting event: ', event)
+
   if (!(await deleteTodo(event))) {
     return {
       statusCode: 404,

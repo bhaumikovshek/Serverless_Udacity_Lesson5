@@ -2,8 +2,8 @@ import 'source-map-support/register';
 import * as uuid from 'uuid';
 import { APIGatewayProxyEvent } from 'aws-lambda';
 
-import TodoDBAccessLayer from './TodoAccess';
-import TodoStorageLayer from './TodoStorage';
+import TodoDBAccessLayer from '../dataLayer/TodoAccess';
+import TodoStorageLayer from '../dataLayer/TodoStorage';
 import { getUserId } from '../lambda/utils';
 import { CreateTodoRequest } from '../requests/CreateTodoRequest';
 import { UpdateTodoRequest } from "../requests/UpdateTodoRequest";

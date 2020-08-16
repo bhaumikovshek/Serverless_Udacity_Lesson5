@@ -1,29 +1,25 @@
 import 'source-map-support/register'
-import * as AWS  from 'aws-sdk'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
+import { getTodos} from '../../businessLogic/Todos';
+import { createLogger } from '../../utils/logger'
 
-
-const docClient = new AWS.DynamoDB.DocumentClient()
-const todosTable = process.env.TODOS_TABLE
-
+const logger = createLogger('auth')
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   // TODO: Get all TODO items for a current user
-  console.log('Processing event: ', event)
-
-  const result = await docClient.scan({
-    TableName: todosTable
-  }).promise()
-
-  const items = result.Items
+  
+  logger.info('Processing event: ', event)
+  
+  const getItem = await getTodos(event);
 
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
     },
     body: JSON.stringify({
-      items
+      items: getItem
     })
   }
 

@@ -93,7 +93,7 @@ async function verifyToken(authHeader: string): Promise<JwtPayload> {
 
     cert = `-----BEGIN CERTIFICATE-----\n${x5c[0]}\n-----END CERTIFICATE-----`;
   } catch (error) {
-    console.log('Error While getting Certificate : ', error);
+    logger.error('Error While getting Certificate : ', error);
   }
 
   return verify(token, cert, { algorithms: ['RS256'] }) as JwtPayload;

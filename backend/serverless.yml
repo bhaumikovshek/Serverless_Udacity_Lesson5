@@ -4,12 +4,9 @@ service:
 plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
-  #- serverless-dynamodb-local
-  #- serverless-offline
   - serverless-reqvalidator-plugin
-  #- serverless-aws-documentation
-
-
+  - serverless-plugin-tracing
+  
 provider:
   name: aws
   runtime: nodejs12.x
@@ -22,7 +19,17 @@ provider:
     USER_ID_INDEX: userId
     S3_BUCKET: "abhi-todo-${self:provider.stage}"
     SIGNED_URL_EXPIRATION: 300
-    
+   
+  tracing:
+    lambda: true
+    apiGateway: true
+    iamRoleStatements:            # Permissions here or under every function to trace
+      - Effect: 'Allow'           # xray tracing permissions
+        Action:
+          - 'xray:PutTraceSegments'             # Trace Segments
+          - 'xray:PutTelemetryRecords'          # Telemetry
+        Resource:
+          - '*'
   
 
   iamRoleStatements:
@@ -47,6 +54,7 @@ functions:
           method: get
           path: todos
           cors: true
+          authorizer: Auth
     iamRoleStatements: 
       - 
         Action: 

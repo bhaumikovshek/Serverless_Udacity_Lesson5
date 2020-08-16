@@ -8,11 +8,15 @@
     },
     "dueDate": {
       "type": "string"
+    },
+    "userId": {
+      "type": "string"
     }
   },
   "required": [
     "name",
-    "dueDate"
+    "dueDate",
+    "userId"
   ],
   "additionalProperties": {
     "properties":{
